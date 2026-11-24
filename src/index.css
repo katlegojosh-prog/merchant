@@ -1,0 +1,350 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-var.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk-var.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #f5f5f4;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- surfaces ---------- */
+
+@layer base {
+  .surface-ink {
+    background: #0a0a0a;
+  }
+
+  .surface-base {
+    background: #111111;
+  }
+
+  .surface-card {
+    background: #161616;
+  }
+
+  .surface-elevated {
+    background: #1c1c1c;
+  }
+
+  .border-default {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .border-strong {
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .text-muted {
+    color: #9c9c9c;
+  }
+
+  .text-subtle {
+    color: #6b6b6b;
+  }
+}
+
+@layer components {
+  .app-shell {
+    @apply relative mx-auto flex min-h-full w-full max-w-[420px] flex-col surface-ink;
+  }
+
+  .page {
+    @apply flex-1 px-5 pt-2 pb-24;
+  }
+
+  .page-with-sidesticky {
+    @apply flex-1 px-5 pt-2 pb-20;
+  }
+
+  .section {
+    @apply pb-6;
+  }
+
+  .section-title {
+    @apply mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-subtle;
+  }
+
+  .section-count {
+    @apply h-5 min-w-[20px] flex items-center justify-center rounded-full bg-white/5 px-1.5 text-[10px] font-semibold tabular-nums text-stone-400;
+  }
+
+  .subsection {
+    @apply mb-5 border-b border-white/[0.05] pb-4 last:border-0 last:pb-0;
+  }
+
+  .btn {
+    @apply inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-5 text-[15px] font-semibold tracking-tight transition-all duration-150 active:scale-[0.99];
+  }
+
+  .btn-primary {
+    @apply btn;
+    @apply bg-gold text-ink shadow-sm shadow-gold/15;
+    @apply hover:bg-yellow-300 hover:shadow-md hover:shadow-gold/20;
+    @apply focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2;
+    @apply active:bg-yellow-200;
+  }
+
+  .btn-secondary {
+    @apply btn;
+    @apply border border-white/10 bg-white/[0.03] text-stone-200;
+    @apply hover:bg-white/[0.08] hover:border-white/18;
+    @apply focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2;
+  }
+
+  .btn-ghost {
+    @apply btn;
+    @apply border border-transparent bg-transparent text-stone-300;
+    @apply hover:bg-white/[0.06] hover:text-stone-100;
+    @apply focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2;
+  }
+
+  .btn-ghost-inset {
+    @apply btn;
+    @apply border border-white/10 bg-white/[0.03] text-stone-300;
+    @apply hover:bg-white/[0.07] hover:text-stone-100;
+    @apply focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2;
+  }
+
+  .btn-danger {
+    @apply btn;
+    @apply rounded-xl bg-urgent/10 text-urgent border border-urgent/30;
+    @apply hover:bg-urgent/18 hover:border-urgent/50;
+    @apply focus-visible:outline-2 focus-visible:outline-urgent focus-visible:outline-offset-2;
+    @apply active:bg-urgent/25;
+  }
+
+  .field {
+    @apply h-12 w-full rounded-xl border border-white/10 bg-black/30 px-3.5 text-[15px] text-stone-100 placeholder:text-stone-500 outline-none transition duration-150;
+  }
+
+  .field:focus-within {
+    @apply border-gold/70 ring-2 ring-gold/20;
+  }
+
+  .field:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/[0.08] surface-card shadow-sm;
+  }
+
+  .card-elevated {
+    @apply rounded-2xl bg-surface-elevated shadow-lg shadow-black/40;
+  }
+
+  .chip {
+    @apply inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3 text-[11px] font-semibold;
+  }
+
+  .chip-urgent {
+    @apply chip bg-urgent/12 text-urgent ring-1 ring-inset ring-urgent/30;
+  }
+
+  .chip-warn {
+    @apply chip bg-warn/12 text-warn ring-1 ring-inset ring-warn/30;
+  }
+
+  .chip-fresh {
+    @apply chip bg-fresh/12 text-fresh ring-1 ring-inset ring-fresh/30;
+  }
+
+  .chip-neutral {
+    @apply chip bg-white/[0.05] text-stone-300 ring-1 ring-inset ring-white/12;
+  }
+
+  .chip-gold {
+    @apply chip bg-gold/12 text-gold ring-1 ring-inset ring-gold/30;
+  }
+
+  .note {
+    @apply text-[11px] leading-relaxed text-stone-500;
+  }
+
+  .caption {
+    @apply text-[11px] text-stone-500;
+  }
+
+  .muted {
+    @apply text-stone-400;
+  }
+
+  .back-button {
+    @apply focus-ring h-12 shrink-0 rounded-lg px-2 text-sm font-semibold text-stone-400 hover:text-stone-200;
+  }
+
+  .spacer-short {
+    @apply w-8;
+  }
+
+  .spacer-long {
+    @apply w-12;
+  }
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 2px;
+}
+
+/* ---------- selection + reduced motion ---------- */
+
+::selection {
+  background: rgba(250, 204, 21, 0.3);
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- scrollbars (subtle, dark) ---------- */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- focus-visible for non-Tailwind-focusable elements ---------- */
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 2px;
+}
+
+/* ---------- additions: CTAs, rows, thumbs, skeletons ---------- */
+
+@layer components {
+  /* The primary CTA used across screens. Kept as an alias of btn-primary. */
+  .btn-gold {
+    @apply btn bg-gold text-ink shadow-sm shadow-gold/15;
+    @apply hover:bg-yellow-300 hover:shadow-md hover:shadow-gold/20;
+    @apply focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2;
+    @apply active:bg-yellow-200;
+  }
+
+  .btn-fresh {
+    @apply btn border border-fresh/30 bg-fresh/10 text-fresh;
+    @apply hover:border-fresh/50 hover:bg-fresh/15;
+    @apply focus-visible:outline-2 focus-visible:outline-fresh focus-visible:outline-offset-2;
+  }
+
+  .nav-link {
+    @apply focus-ring rounded-lg px-2 py-1 text-[11px] font-semibold text-stone-400 transition;
+    @apply hover:bg-white/[0.06] hover:text-white;
+  }
+
+  .row-tap {
+    @apply card flex w-full items-center gap-3 border-l-4 px-4 py-3 text-left;
+    @apply transition duration-150 active:scale-[0.995] active:bg-white/[0.05];
+  }
+
+  .thumb {
+    @apply shrink-0 rounded-lg object-cover ring-1 ring-inset ring-white/10;
+    background-color: #222222;
+  }
+
+  .thumb-fallback {
+    @apply inline-flex shrink-0 items-center justify-center rounded-lg font-display font-bold text-gold ring-1 ring-inset ring-gold/25;
+    background-color: rgba(250, 204, 21, 0.1);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .skeleton {
+    @apply rounded-2xl border border-white/[0.06];
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0.075) 40%,
+      rgba(255, 255, 255, 0.03) 80%
+    );
+    background-size: 480px 100%;
+    background-repeat: no-repeat;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  .demo-chip {
+    @apply inline-flex items-center rounded-full bg-white/[0.06] px-2 py-0.5 text-[10px] font-semibold text-stone-400 ring-1 ring-inset ring-white/10;
+  }
+
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -240px 0;
+  }
+  100% {
+    background-position: 480px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
