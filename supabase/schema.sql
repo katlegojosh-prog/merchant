@@ -143,6 +143,14 @@ revoke insert, update, delete, truncate on public.profiles from anon;
 revoke update on public.profiles from authenticated;
 grant update (name, full_name, email) on public.profiles to authenticated;
 
+-- The insert policy only checks that the row is your own, so a client could
+-- still create it as role = 'Manager' and unlock the audit trail. Take the
+-- insert grant down to identity + display columns: role and plan then fall
+-- back to their 'Staff' / 'free' defaults. The manager bootstrap below is run
+-- with the service role / SQL editor, which is unaffected.
+revoke insert on public.profiles from authenticated;
+grant insert (id, name, full_name, email) on public.profiles to authenticated;
+
 -- product_events is append-only for clients: no update or delete policy exists,
 -- so revoking the grants keeps history untouchable even if a policy is added.
 revoke insert, update, delete, truncate on public.product_events from anon;
