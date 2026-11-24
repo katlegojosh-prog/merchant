@@ -27,3 +27,34 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  database:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: postgres
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Throwaway database: supabase/verify.sql applies supabase/schema.sql and
+      # then asserts the RLS policies, grants and products_guard_update trigger.
+      - name: Verify database guarantees
+        run: psql -v ON_ERROR_STOP=1 -f supabase/verify.sql
