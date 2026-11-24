@@ -91,7 +91,9 @@ as $$
   )
 $$;
 
-revoke all on function public.is_manager() from anon;
+-- Functions are executable by PUBLIC unless that grant is taken away too, so
+-- revoking anon alone would leave every visitor able to call this helper.
+revoke all on function public.is_manager() from public, anon;
 grant execute on function public.is_manager() to authenticated;
 
 drop policy if exists "Logged-in users can read events" on public.product_events;
